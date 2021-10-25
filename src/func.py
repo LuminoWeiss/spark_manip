@@ -48,6 +48,10 @@ def join_txn_with_features(df_txn, df_features, cid, txn_time, as_of_dt):
 
 
 def retry(howmany):
+    """ This is a decorator that executes the function until success, or user specified trial count is reached
+    :param howmany: {int} The max number of times decorated function shall be tried until success
+    :return: decorated function
+    """
     def tryit(func):
         def f(*args):
             attempts = 0
