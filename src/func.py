@@ -35,8 +35,8 @@ def join_txn_with_features(df_txn, df_features, cid, txn_time, as_of_dt):
     cols_select += [getattr(df_txn, cid), txn_time]
 
     df_with_f = (df_txn.join(df_features, getattr(df_txn, cid) == getattr(df_features, cid), how="left")
-                 .withColumn(as_of_dt, F.col(as_of_dt).cast(Timestamptype))
-                 .withColumn(as_of_dt, F.unix_timestamp(F.col(as_of_dt)))
+                 .withColumn(as_of_dt, F.unix_timestamp(F.col(as_of_dt).cast(Timestamptype)))
+                 .withColumn(txn_time, F.unix_timestamp(F.col(txn_time).cast(Timestamptype)))
                  .select(cols_select)
                  .filter(not F.col(txn_time) < F.col(as_of_dt) | F.col(txn_time).isNull())
                  .withColumn(f"{as_of_dt}_max", F.max(as_of_dt).over(win_spec))
