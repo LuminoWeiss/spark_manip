@@ -8,7 +8,7 @@ from pyspark.sql.types import Timestamptype
 
 
 def join_txn_with_features(df_txn, df_features, cid, txn_time, as_of_dt):
-    """ This function takes in transaction table, and feature table, join then together.
+    """ This function takes in transaction table, and feature table, join them together.
         The feature table here is SCD Type2 table.
         In a SCD Type2 table, the record timestamp (as_of_dt) joined to the transaction table:
             should be the latest record of cid that is before transaction time
